@@ -23,6 +23,7 @@ var stage;
 var objectManager;
 var hero;
 var key=0;
+var randomCount=0;
 
 function init(){
 	stage=document.getElementById("stage");
@@ -32,18 +33,36 @@ function init(){
 	gameLoop();
 }
 function createHero(){
-	hero = new Hero("HERO",stage, 50,100, 100, 100, 0, 0, "red", "");
+	hero = new Hero("HERO",stage, 250,500, 100, 100, 0, 0, "red", "");
 	objectManager.addObject(hero);
 }
 
 function createBlock(){
-	var block = new Block("BLOCK",stage,600,150,150,150,0,0,"green", "");	
-	objectManager.addObject(block);
+	for(var i=0;i<7;i++){
+		var block = new Block("BLOCK",stage,0,125*i,120,120,0,0,"green", "");	
+		objectManager.addObject(block);
+	}
+
+
+	for(var i=0;i<20;i++){
+		var block = new Block("BLOCK",stage,i*150,30,120,120,0,0,"green", "");	
+		objectManager.addObject(block);
+	}
+
+	for(var i=0;i<20;i++){
+		var block = new Block("BLOCK",stage,i*150,630,120,120,0,0,"green", "");	
+		objectManager.addObject(block);
+	}
+
 }
 
+/*---------------------------------------------------------------
+key 값을 사람이 아닌 컴퓨터가 결정한다면??
+---------------------------------------------------------------*/
 function control(){
-	key=event.keyCode;
 	switch(key){
+		case 35:hero.velX=0;break;
+		case 36:hero.velY=0;break;
 		case 37:hero.velX=-2;break;
 		case 39:hero.velX=2;break;
 		case 38:hero.velY=-2;break;
@@ -51,32 +70,28 @@ function control(){
 	}
 }
 
-function stop(){
-	key=event.keyCode;
+/*---------------------------------------------------------------
+key 값을 조정하여 적군을 램덤하게 움직인다
+---------------------------------------------------------------*/
+function randomMove(){
+	randomCount++;
 
-	if(key==37 || key==39){
-		hero.velX=0;
+	if(randomCount%40==0){
+		key=getRandomByRange(35,41);
+		console.log(key);
 	}
-	if(key==38 || key==40){
-		hero.velY=0;
-	}
-
 }
 
 function gameLoop(){
 	objectManager.tick();
 	objectManager.render();
+	randomMove();
+	control();
 	setTimeout("gameLoop()",10);
 }
 
 addEventListener("load", function(){
 	init();
-	addEventListener("keydown", function(){
-		control();
-	});
-	addEventListener("keyup", function(){
-		stop();
-	});
 });
 </script>
 </head>

@@ -69,7 +69,7 @@ function hitTest(me, target , nextX , nextY) {
 side : left, right, up, down
 ----------------------------------------------------*/
 function getSensorSize(side , x, y, width, height ){
-	var border=5; //막대들의 두께
+	var border=8; //막대들의 두께
 	var colTypePadding=2//세로형 막대 들여쓰기 퍼센트 %
 
 	var rowTypePadding=2//가로형 막대 들여쓰기 퍼센트 %
